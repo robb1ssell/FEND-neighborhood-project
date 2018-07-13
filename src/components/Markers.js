@@ -17,7 +17,25 @@ class Markers extends React.Component {
         }
     }
     
+    updateQuery = (query) => {
+        this.setState({ query: query.trim() })
+    }
+
     render() {
+
+        let {list, query} = this.state;
+        let showingList = list
+        
+        // if something is in search box, filter list. If empty, show all items.
+        // taken from previous lesson project contacts app
+        if (query) {
+            const match = new RegExp(escapeRegExp(query), 'i')
+            showingList = list.filter((item) => match.test(item.name))
+        }
+        else {
+            showingList = list
+        }
+
         return(
             <div id="marker-list">
                 <div id="marker-search">
@@ -28,7 +46,7 @@ class Markers extends React.Component {
                         aria-label="Type to search markers on the map"
                         placeholder="Search Houston"
                         value={query}
-                        onChange={something}
+                        onChange={(e) => this.updateQuery(e.target.value)}
                     />
                 </div>
             </div>
