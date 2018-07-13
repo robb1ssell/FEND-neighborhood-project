@@ -25,7 +25,7 @@ class Markers extends React.Component {
 
         let {list, query} = this.state;
         let showingList = list
-        
+
         // if something is in search box, filter list. If empty, show all items.
         // taken from previous lesson project contacts app
         if (query) {
@@ -37,10 +37,10 @@ class Markers extends React.Component {
         }
 
         return(
-            <div id="marker-list">
-                <div id="marker-search">
+            <div id="list-markers">
+                <div id="search-markers">
                     <input
-                        className="search-markers"
+                        className="marker-search"
                         type="text"
                         role="search"
                         aria-label="Type to search markers on the map"
@@ -49,6 +49,20 @@ class Markers extends React.Component {
                         onChange={(e) => this.updateQuery(e.target.value)}
                     />
                 </div>
+                <ul
+                    tabIndex="2"
+                    aria-label="List of some significant Houston destinations"
+                >
+                    {showingList.map((item, index) => (
+                        <li key={index}
+                            className="list-item"
+                            tabIndex={index+2}
+                            onClick={something here}
+                        >
+                            {item.name}
+                        </li>
+                    ))}
+                </ul>
             </div>
         )
     }
