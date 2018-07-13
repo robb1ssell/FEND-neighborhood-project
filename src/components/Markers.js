@@ -17,8 +17,15 @@ class Markers extends React.Component {
         }
     }
     
+    // change the query state when the user inputs something
     updateQuery = (query) => {
         this.setState({ query: query.trim() })
+    }
+
+    // if user clicks a list item, focuses it on the map
+    listItem = (item, e) => {
+        let selected = markers.filter((current) => current.name === item.name)
+        window.google.maps.event.trigger(selected[0], 'click')
     }
 
     render() {
@@ -57,7 +64,7 @@ class Markers extends React.Component {
                         <li key={index}
                             className="list-item"
                             tabIndex={index+2}
-                            onClick={something here}
+                            onClick={this.listItem.bind(this, item)}
                         >
                             {item.name}
                         </li>
@@ -68,4 +75,6 @@ class Markers extends React.Component {
     }
 }
 
-export default Markers
+export default scriptLoader(
+    [`https://maps.googleapis.com/maps/api/js?key=AIzaSyARWgHczFrsg7_MepX_G7tE_9Hg1w170U8`]
+)(Markers);
