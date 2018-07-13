@@ -1,21 +1,30 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Markers from './components/Markers'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+const locations = []
+
+class App extends React.Component {
+    render() {
+        return (
+            <div className="App">
+                <div className='search'>
+                    <header>
+                        <h1>Houston, Texas</h1>
+                    </header>
+                    <Markers
+                        locations={locations}
+                    />
+                </div>
+                <div id="map"
+                    role="applicaton"
+                    aria-label="Map of Houston, Texas"
+                    tabIndex="-1"
+                >
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;
