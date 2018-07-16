@@ -77,10 +77,17 @@ class Markers extends React.Component {
         else {
             showingList = list
         }
-
+        /*
         markers.forEach(marker => {
             marker.setMap(null)
         });
+        
+
+        let mapLinks = document.querySelectorAll('#map a')
+        mapLinks.forEach(function(link) {
+            link.setAttribute('tabIndex','-1')
+        });
+        */
 
         markers = []
         infoWindows = []
@@ -138,6 +145,7 @@ class Markers extends React.Component {
                     <input
                         className="marker-search"
                         type="text"
+                        tabIndex="0"
                         role="search"
                         aria-label="Type to search markers on the map"
                         placeholder="Search Houston"
@@ -146,13 +154,13 @@ class Markers extends React.Component {
                     />
                 </div>
                 <ul
-                    tabIndex="2"
+                    tabIndex="0"
                     aria-label="List of some significant Houston destinations"
                 >
                     {showingList.map((item, index) => (
                         <li key={index}
                             className="list-item"
-                            tabIndex={index+2}
+                            tabIndex='0'
                             onClick={this.listItem.bind(this, item)}
                         >
                             {item.name}

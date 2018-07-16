@@ -30,6 +30,12 @@ ul {
 
 li {
     padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+li:hover {
+    cursor: pointer;
+    background-color: #e8b64c;
 }
 
 #search-markers {
