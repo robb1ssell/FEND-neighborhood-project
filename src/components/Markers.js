@@ -34,6 +34,18 @@ class Markers extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.state.list.map((item) => {
+            return fetchJsonp(
+                `https://en.wikipedia.org/w/api.php?action=opensearch&search=${item.name}&format=json&callback=wikiCallback`)
+                .then(response => response.json()).then((responseJson) => {
+                        let info = [...this.state.info, [responseJson, responseJson[2][0], responseJson[3][0]]]
+                        this.updateInfo(info)
+                    }).catch(error => 
+                        console.error(error))
+        })
+    }
+
     updateInfo = (info) => {
         this.setState({info: info})
     }

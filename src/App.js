@@ -4,7 +4,7 @@ import Markers from './components/Markers'
 
 const locations = [
     { name: 'Houston Zoo', lat: 29.714234, lng: -95.388654},
-    { name: 'Houston Arboretum & Nature Center', lat: 29.765215, lng: -95.451973},
+    { name: 'Houston Arboretum', lat: 29.765215, lng: -95.451973},
     { name: 'NRG Stadium', lat: 29.684703, lng: -95.410921},
     { name: 'Hobby Airport', lat: 29.645592, lng: -95.277473},
     { name: 'Downtown Aquarium', lat: 29.764336, lng: -95.367355},
