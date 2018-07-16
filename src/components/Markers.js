@@ -30,6 +30,15 @@ class Markers extends React.Component {
 
     componentDidUpdate() {
         const { list, query, map } = this.state
+        let showingList = list
+        if(query) {
+            const match = new RegExp(escapeRegExp(query), 'i')
+            showingList = list.filter((item) => match.test(item.name))
+        }
+        else {
+            showingList = list
+        }
+        
         markers.forEach(marker => {
             marker.setMap(null)
         });
