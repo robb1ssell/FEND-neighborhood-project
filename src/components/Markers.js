@@ -43,6 +43,29 @@ class Markers extends React.Component {
             showingList = list
         }
 
+        markers.forEach(marker => {
+            marker.setMap(null)
+        });
+
+        markers = []
+        infoWindows = []
+        showingList.map((marker) => {
+            let getInfo = this.state.infos.filter((single) => 
+                marker.name === single [0][0]).map(second => {
+                    if(second.length === 0) {
+                        return 'No info for this location';
+                    }
+                    else if(second[1] !== '') {
+                        return second[1];
+                    }
+                    else {
+                        return 'No info for this location';
+                    }
+                });
+            let infoContent = ``
+            let addInfo
+        })
+
         return(
             <div id="list-markers">
                 <div id="search-markers">
