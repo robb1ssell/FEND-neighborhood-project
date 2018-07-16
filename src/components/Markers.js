@@ -17,6 +17,22 @@ class Markers extends React.Component {
         }
     }
 
+    // update info state with new info and cause re render
+    updateInfo = (info) => {
+        this.setState({info: info})
+    }
+    
+    // change the query state when the user inputs something
+    updateQuery = (query) => {
+        this.setState({ query: query.trim() })
+    }
+
+    // if user clicks a list item, focuses it on the map
+    listItem = (item, e) => {
+        let selected = markers.filter((current) => current.name === item.name)
+        window.google.maps.event.trigger(selected[0], 'click')
+    }
+
     componentWillReceiveProps({isScriptLoaded}) {
         if(isScriptLoaded) {
             let mapView = document.getElementById('map');
@@ -34,6 +50,8 @@ class Markers extends React.Component {
         }
     }
 
+    // when map loads, make api calls to wiki for each item in list
+    // add to info for infowindow if call is successful
     componentDidMount() {
         this.state.list.map((item) => {
             return fetchJsonp(
@@ -44,21 +62,6 @@ class Markers extends React.Component {
                     }).catch(error => 
                         console.error(error))
         })
-    }
-
-    updateInfo = (info) => {
-        this.setState({info: info})
-    }
-    
-    // change the query state when the user inputs something
-    updateQuery = (query) => {
-        this.setState({ query: query.trim() })
-    }
-
-    // if user clicks a list item, focuses it on the map
-    listItem = (item, e) => {
-        let selected = markers.filter((current) => current.name === item.name)
-        window.google.maps.event.trigger(selected[0], 'click')
     }
 
     // check search string and filter list accordingly
@@ -116,7 +119,6 @@ class Markers extends React.Component {
     }
 
     render() {
-
         let {list, query} = this.state;
         let showingList = list
 

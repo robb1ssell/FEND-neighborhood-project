@@ -17,20 +17,23 @@ const locations = [
 class App extends React.Component {
     render() {
         return (
-            <div className="App">
-                <div className='search'>
-                    <header>
-                        <h1>Houston, Texas</h1>
-                    </header>
-                    <Markers
-                        locations={locations}
-                    />
-                </div>
-                <div id="map"
-                    role="applicaton"
-                    aria-label="Map of Houston, Texas"
-                    tabIndex="-1"
-                >
+            <div className="App container-fluid">
+                <div className="row">
+                    <div className='search col-md-6'>
+                        <header>
+                            <h1>Houston, Texas</h1>
+                        </header>
+                        <Markers
+                            locations={locations}
+                        />
+                    </div>
+                    <div id="map"
+                        className="col-md-6"
+                        role="applicaton"
+                        aria-label="Map of Houston, Texas"
+                        tabIndex="-1"
+                    >
+                    </div>
                 </div>
             </div>
         );
