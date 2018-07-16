@@ -1,3 +1,9 @@
+@media screen and (max-width: 992px) {
+    #map {
+        height: 400px !important;
+    }
+}
+
 .App {
     text-align: center;
 }

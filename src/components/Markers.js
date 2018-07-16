@@ -36,7 +36,7 @@ class Markers extends React.Component {
     componentWillReceiveProps({isScriptLoaded}) {
         if(isScriptLoaded) {
             let mapView = document.getElementById('map');
-            mapView.style.height = window.innerHeight + "px";
+            mapView.style.height = "100vh";
 
             let map = new window.google.maps.Map(mapView, {
                 center: {lat: 29.774684, lng: -95.370803},

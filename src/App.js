@@ -19,7 +19,7 @@ class App extends React.Component {
         return (
             <div className="App container-fluid">
                 <div className="row">
-                    <div className='search col-md-6'>
+                    <div className='search col-lg-3'>
                         <header>
                             <h1>Houston, Texas</h1>
                         </header>
@@ -28,7 +28,7 @@ class App extends React.Component {
                         />
                     </div>
                     <div id="map"
-                        className="col-md-6"
+                        className="col-lg-9"
                         role="applicaton"
                         aria-label="Map of Houston, Texas"
                         tabIndex="-1"
