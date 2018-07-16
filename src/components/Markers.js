@@ -28,7 +28,9 @@ class Markers extends React.Component {
                         let info = [...this.state.info, [responseJson, responseJson[2][0], responseJson[3][0]]]
                         this.updateInfo(info)
                     }).catch(error => 
-                        console.error(error))
+                        window.gm_authFailure = () => {
+                            alert(error)
+                    })
         })
     }
 
@@ -47,7 +49,9 @@ class Markers extends React.Component {
             this.setState({map: map});
         }
         else {
-            console.log('Error loading map.')
+            window.gm_authFailure = () => {
+                alert('Error loading map.')
+            }
         }
     }
 
@@ -175,6 +179,7 @@ class Markers extends React.Component {
     }
 }
 
+// API KEY: AIzaSyARWgHczFrsg7_MepX_G7tE_9Hg1w170U8
 export default scriptLoader(
     [`https://maps.googleapis.com/maps/api/js?key=AIzaSyARWgHczFrsg7_MepX_G7tE_9Hg1w170U8`]
 )(Markers);
