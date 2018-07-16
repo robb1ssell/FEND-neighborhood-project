@@ -28,21 +28,8 @@ class Markers extends React.Component {
         window.google.maps.event.trigger(selected[0], 'click')
     }
 
-    render() {
-
-        let {list, query} = this.state;
-        let showingList = list
-
-        // if something is in search box, filter list. If empty, show all items.
-        // taken from previous lesson project contacts app
-        if (query) {
-            const match = new RegExp(escapeRegExp(query), 'i')
-            showingList = list.filter((item) => match.test(item.name))
-        }
-        else {
-            showingList = list
-        }
-
+    componentDidUpdate() {
+        const { list, query, map } = this.state
         markers.forEach(marker => {
             marker.setMap(null)
         });
@@ -62,9 +49,41 @@ class Markers extends React.Component {
                         return 'No info for this location';
                     }
                 });
-            let infoContent = ``
-            let addInfo
+            let infoContent = `<div className="info-window">
+                                <h4>${marker.name}</h4>
+                                    <p>${getInfo}</p>
+                                </div>`;
+            let addInfo = new window.google.maps.InfoWindow({content: infoContent});
+            let addMarker = new window.google.maps.Marker({
+                position: {lat: marker.lat, lng: marker.lng},
+                map: map,
+                name: marker.name,
+                animation: window.google.maps.Animation.DROP
+            });
+            markers.push(addMarker);
+            infoWindows.push(addInfo);
+
+            addMarker.addListener('click', function() {
+                infoWindows.forEach(item => {item.close()});
+                addInfo.open(map, addMarker);
+            });
         })
+    }
+
+    render() {
+
+        let {list, query} = this.state;
+        let showingList = list
+
+        // if something is in search box, filter list. If empty, show all items.
+        // taken from previous lesson project contacts app
+        if (query) {
+            const match = new RegExp(escapeRegExp(query), 'i')
+            showingList = list.filter((item) => match.test(item.name))
+        }
+        else {
+            showingList = list
+        }
 
         return(
             <div id="list-markers">
