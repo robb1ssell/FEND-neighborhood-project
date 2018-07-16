@@ -3,6 +3,7 @@ import escapeRegExp from 'escape-string-regexp'
 import scriptLoader from 'react-async-script-loader'
 import fetchJsonp from 'fetch-jsonp'
 
+// variables to hold our marker and infowindow data
 let markers = []
 let infoWindows = []
 
@@ -33,6 +34,8 @@ class Markers extends React.Component {
         window.google.maps.event.trigger(selected[0], 'click')
     }
 
+    // If the script call loads properly, make our map and set its state
+    // Throw error if not
     componentWillReceiveProps({isScriptLoaded}) {
         if(isScriptLoaded) {
             let mapView = document.getElementById('map');
@@ -91,6 +94,9 @@ class Markers extends React.Component {
 
         markers = []
         infoWindows = []
+        
+        // map over our list of showing markers
+        // grab info from our current state
         showingList.map((marker) => {
             let getInfo = this.state.info.filter((single) => 
                 marker.name === single [0][0]).map(second => {
@@ -108,6 +114,8 @@ class Markers extends React.Component {
                                 <h4>${marker.name}</h4>
                                     <p>${getInfo}</p>
                                 </div>`;
+
+            // Add infowindow and markers to map
             let addInfo = new window.google.maps.InfoWindow({content: infoContent});
             let addMarker = new window.google.maps.Marker({
                 position: {lat: marker.lat, lng: marker.lng},
@@ -118,6 +126,7 @@ class Markers extends React.Component {
             markers.push(addMarker);
             infoWindows.push(addInfo);
 
+            // Event listener to open and close our infowindows
             addMarker.addListener('click', function() {
                 infoWindows.forEach(item => {item.close()});
                 addInfo.open(map, addMarker);
