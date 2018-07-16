@@ -18,20 +18,18 @@ class Markers extends React.Component {
         }
     }
 
-    // update info state with new info and cause re render
-    updateInfo = (info) => {
-        this.setState({info: info})
-    }
-    
-    // change the query state when the user inputs something
-    updateQuery = (query) => {
-        this.setState({ query: query.trim() })
-    }
-
-    // if user clicks a list item, focuses it on the map
-    listItem = (item, e) => {
-        let selected = markers.filter((current) => current.name === item.name)
-        window.google.maps.event.trigger(selected[0], 'click')
+    // when map loads, make api calls to wiki for each item in list
+    // add to info for infowindow if call is successful
+    componentDidMount() {
+        this.state.list.map((item) => {
+            return fetchJsonp(
+                `https://en.wikipedia.org/w/api.php?action=opensearch&search=${item.name}&format=json&callback=wikiCallback`)
+                .then(response => response.json()).then((responseJson) => {
+                        let info = [...this.state.info, [responseJson, responseJson[2][0], responseJson[3][0]]]
+                        this.updateInfo(info)
+                    }).catch(error => 
+                        console.error(error))
+        })
     }
 
     // If the script call loads properly, make our map and set its state
@@ -53,18 +51,14 @@ class Markers extends React.Component {
         }
     }
 
-    // when map loads, make api calls to wiki for each item in list
-    // add to info for infowindow if call is successful
-    componentDidMount() {
-        this.state.list.map((item) => {
-            return fetchJsonp(
-                `https://en.wikipedia.org/w/api.php?action=opensearch&search=${item.name}&format=json&callback=wikiCallback`)
-                .then(response => response.json()).then((responseJson) => {
-                        let info = [...this.state.info, [responseJson, responseJson[2][0], responseJson[3][0]]]
-                        this.updateInfo(info)
-                    }).catch(error => 
-                        console.error(error))
-        })
+    // update info state with new info and cause re render
+    updateInfo = (info) => {
+        this.setState({info: info})
+    }
+    
+    // change the query state when the user inputs something
+    updateQuery = (query) => {
+        this.setState({ query: query.trim() })
     }
 
     // check search string and filter list accordingly
@@ -80,17 +74,11 @@ class Markers extends React.Component {
         else {
             showingList = list
         }
-        /*
-        markers.forEach(marker => {
-            marker.setMap(null)
-        });
-        
 
-        let mapLinks = document.querySelectorAll('#map a')
-        mapLinks.forEach(function(link) {
-            link.setAttribute('tabIndex','-1')
+        // Removes markers that are filtered out by search query
+        markers.forEach(mark => {
+            mark.setMap(null)
         });
-        */
 
         markers = []
         infoWindows = []
@@ -132,6 +120,12 @@ class Markers extends React.Component {
                 addInfo.open(map, addMarker);
             });
         })
+    }
+
+    // if user clicks a list item, focuses it on the map
+    listItem = (item, e) => {
+        let selected = markers.filter((current) => current.name === item.name)
+        window.google.maps.event.trigger(selected[0], 'click')
     }
 
     render() {
