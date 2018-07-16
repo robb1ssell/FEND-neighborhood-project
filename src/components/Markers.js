@@ -16,6 +16,27 @@ class Markers extends React.Component {
             query: '' // used to isolate markers during search
         }
     }
+
+    componentWillReceiveProps({isScriptLoaded}) {
+        if(isScriptLoaded) {
+            let mapView = document.getElementById('map');
+            mapView.style.height = window.innerHeight + "px";
+
+            let map = new window.google.maps.Map(mapView, {
+                center: {lat: 29.774684, lng: -95.370803},
+                zoom: 11
+            });
+
+            this.setState({map: map});
+        }
+        else {
+            console.log('Error loading map.')
+        }
+    }
+
+    updateInfo = (info) => {
+        this.setState({info: info})
+    }
     
     // change the query state when the user inputs something
     updateQuery = (query) => {
@@ -28,6 +49,9 @@ class Markers extends React.Component {
         window.google.maps.event.trigger(selected[0], 'click')
     }
 
+    // check search string and filter list accordingly
+    // set global arrays to empty and refill without empty strings
+    // add markers with infowindows and event listeners to open and close
     componentDidUpdate() {
         const { list, query, map } = this.state
         let showingList = list
@@ -38,7 +62,7 @@ class Markers extends React.Component {
         else {
             showingList = list
         }
-        
+
         markers.forEach(marker => {
             marker.setMap(null)
         });
@@ -46,7 +70,7 @@ class Markers extends React.Component {
         markers = []
         infoWindows = []
         showingList.map((marker) => {
-            let getInfo = this.state.infos.filter((single) => 
+            let getInfo = this.state.info.filter((single) => 
                 marker.name === single [0][0]).map(second => {
                     if(second.length === 0) {
                         return 'No info for this location';
