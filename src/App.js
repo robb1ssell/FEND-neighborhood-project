@@ -22,6 +22,7 @@ class App extends React.Component {
                     <div className='search col-lg-3'>
                         <header>
                             <h1>Houston, Texas</h1>
+                            <hr/>
                         </header>
                         <Markers
                             locations={locations}

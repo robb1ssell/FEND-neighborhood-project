@@ -25,4 +25,14 @@
 
 ul {
     list-style: none;
+    padding: 0px !important;
+}
+
+li {
+    padding-bottom: 10px;
+}
+
+#search-markers {
+    padding-bottom: 20px;
+    padding-top: 15px;
 }
