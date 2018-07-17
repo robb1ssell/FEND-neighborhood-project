@@ -16,4 +16,4 @@ This project uses the Google Maps and Wikipedia APIs to provide a map with marke
 - Download or clone this repository to your local machine
 - Navigate to the directory and from the command line type ```npm install```
 - To run ```development mode```, type ```npm start``` to run the app. A browser window will open at address ```localhost:3000```
-- To run a production build, type ```npm run serve```. The app will be viewable at ```localhost:5000```.
+- To run a production build, type ```npm run build``` followed by ```serve -s build```. The app will be viewable at ```localhost:5000```.

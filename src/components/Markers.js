@@ -18,19 +18,24 @@ class Markers extends React.Component {
         }
     }
 
+    gm_authFailure() {
+        window.alert("Google Maps error!")
+    }
+
     // when map loads, make api calls to wiki for each item in list
     // add to info for infowindow if call is successful
     componentDidMount() {
+        window.gm_authFailure = this.gm_authFailure;
+
         this.state.list.map((item) => {
             return fetchJsonp(
                 `https://en.wikipedia.org/w/api.php?action=opensearch&search=${item.name}&format=json&callback=wikiCallback`)
                 .then(response => response.json()).then((responseJson) => {
                         let info = [...this.state.info, [responseJson, responseJson[2][0], responseJson[3][0]]]
                         this.updateInfo(info)
-                    }).catch(error => 
-                        window.gm_authFailure = () => {
+                    }).catch(error =>
                             alert(error)
-                    })
+                    )
         })
     }
 
@@ -49,9 +54,7 @@ class Markers extends React.Component {
             this.setState({map: map});
         }
         else {
-            window.gm_authFailure = () => {
-                alert('Error loading map.')
-            }
+            alert('error')
         }
     }
 
@@ -120,8 +123,12 @@ class Markers extends React.Component {
 
             // Event listener to open and close our infowindows
             addMarker.addListener('click', function() {
+                addMarker.setAnimation(window.google.maps.Animation.BOUNCE);
                 infoWindows.forEach(item => {item.close()});
                 addInfo.open(map, addMarker);
+            });
+            window.google.maps.event.addListener(addInfo, 'closeclick', function () {
+                addMarker.setAnimation(null);
             });
         })
     }

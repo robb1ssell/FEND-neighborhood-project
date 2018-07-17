@@ -10,7 +10,7 @@ class App extends React.Component {
                 <div className="row">
                     <div className='search col-lg-3'>
                         <header>
-                            <h1 tabIndex="0">Houston, Texas</h1>
+                            <h1>Houston, Texas</h1>
                             <hr/>
                         </header>
                         <Markers
