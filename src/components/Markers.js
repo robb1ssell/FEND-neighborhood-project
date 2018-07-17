@@ -93,8 +93,7 @@ class Markers extends React.Component {
         // map over our list of showing markers
         // grab info from our current state
         showingList.map((marker) => {
-            let getInfo = this.state.info.filter((single) => 
-                marker.name === single [0][0]).map(second => {
+            let getInfo = this.state.info.filter((single) => marker.name === single[0][0]).map(second => {
                     if(second.length === 0) {
                         return 'No info for this location';
                     }
@@ -123,13 +122,15 @@ class Markers extends React.Component {
 
             // Event listener to open and close our infowindows
             addMarker.addListener('click', function() {
-                addMarker.setAnimation(window.google.maps.Animation.BOUNCE);
+                addMarker.setAnimation(window.google.maps.Animation.BOUNCE); //marker bounces when clicked
                 infoWindows.forEach(item => {item.close()});
                 addInfo.open(map, addMarker);
             });
+            // Listen for infowindow close, stop animation when closed
             window.google.maps.event.addListener(addInfo, 'closeclick', function () {
                 addMarker.setAnimation(null);
             });
+            return 0;
         })
     }
 
@@ -154,13 +155,13 @@ class Markers extends React.Component {
         }
 
         return(
-            <div id="list-markers">
+            <div id="list-markers" role="list">
                 <div id="search-markers">
                     <input
                         className="marker-search"
                         type="text"
                         tabIndex="0"
-                        role="search"
+                        role="searchbox"
                         aria-label="Type to search markers on the map"
                         placeholder="Search Houston"
                         value={query}

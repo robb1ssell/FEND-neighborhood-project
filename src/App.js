@@ -19,7 +19,8 @@ class App extends React.Component {
                     </div>
                     <div id="map"
                         className="col-lg-9"
-                        role="applicaton"
+                        role="presentation"
+                        aria-hidden="true"
                         aria-label="Map of Houston, Texas"
                         tabIndex="-1"
                     >
